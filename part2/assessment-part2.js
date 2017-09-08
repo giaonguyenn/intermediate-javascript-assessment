@@ -37,22 +37,22 @@
 var firstUser = 'don\'t touch this string!';
 var thirdUser = 'don\'t touch this string, either!';
 
-// function noWeakLink() {
+function noWeakLink() {
 
-//   return $http({
-//     method: 'GET',
-//     url: '/api/users'
-//   })
-//   // CODE HERE...
-//   .then(function(response) {
-//     firstUser = response.data;
-//     return firstUser;
-//   })
-//   .then(function(response) {
-//     thirdUser = response.data.data;
-//     return thirdUser[10];
-//   });
-// }
+  return $http({
+    method: 'GET',
+    url: '/api/users'
+  })
+  // CODE HERE...
+  .then(function(response) {
+    firstUser = response.data[0];
+    return response;
+  })
+  .then(function(response1) {
+    thirdUser = response1.data[2];
+    return response1.data[9];
+  });
+}
 
 // *************
 // * PROBLEM 2 *
@@ -151,6 +151,7 @@ function forgetter (name) {
     objects.remember.push(item);
     return objects;
   };
+  return rememberall;
 }
 
 // *************
@@ -180,9 +181,37 @@ function forgetter (name) {
 // CODE HERE...
 
 function frodo(startingHungerValue, startingDangerValue) {
-  // var object ={
-  //   hunger: startingHungerValue,
-  //   danger: startingDangerValue
+  var hunger = startingHungerValue;
+  var danger = startingDangerValue;
+  return { 
+    dinnerOverFire: function() {
+      hunger -= 25;
+      danger += 40;
+      if (hunger<0) hunger = 0;
+      if (hunger>100) hunger = 100;
+      if(danger<0) danger = 0;
+      if (danger>100) danger = 100;
+      return {
+        hunger: hunger,
+        danger: danger
+      };
+    },
+    hidingInBush: function() {
+      hunger += 35;
+      danger -= 20;
+      if (hunger<0) hunger = 0;
+      if (hunger>100) hunger = 100;
+      if(danger<0) danger = 0;
+      if (danger>100) danger = 100;
+      return {
+        hunger: hunger,
+        danger: danger
+      };
+    }
+  }
+  // var object = {
+  //   hunger: hunger,
+  //   danger: danger
   // };
   // object.dinnerOverFire = function() {
   //   this.hunger -= 25;
@@ -194,19 +223,4 @@ function frodo(startingHungerValue, startingDangerValue) {
   //   this.danger -= 20;
   //   return object;
   // };
-  var object = {
-    hunger: startingHungerValue,
-    danger: startingDangerValue,
-    dinnerOverFire: function(){
-      this.hunger -= 25;
-      this.danger + 40;
-      return this.object;
-    },
-    hidingInBush: function(){
-      this.hunger += 35;
-      this.danger -=20;
-      return this.object;
-    }
-  };
-  
 }

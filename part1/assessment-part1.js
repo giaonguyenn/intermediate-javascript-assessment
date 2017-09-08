@@ -163,8 +163,8 @@ var theAnswer = "Unknown";
 
 // CODE HERE...
 
-function promiseCatcher (param) {
-  return $http.get(param).then(function(response) {
-    return theAnswer = response.data;
+function promiseCatcher (promise) {
+  promise.then(function(response) {
+    theAnswer = response;
   });
 }

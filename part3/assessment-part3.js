@@ -15,12 +15,13 @@
 // CODE HERE...
 
 function callBinding(magicAnimals, updateAnimal, id) {
-	for(var i=0; i<magicAnimals.length; i++) {
-		if (magicAnimals[i] == id) {
-			updateAnimal.call(magicAnimals[i], "Trogdor");
-		}
-	}
-	return magicAnimals;
+	// for(var i=0; i<magicAnimals.length; i++) {
+	// 	if (magicAnimals[i] == id) {
+	// 		updateAnimal.call(magicAnimals[i], "Trogdor");
+	// 	}
+	// }
+	// return magicAnimals;
+	return updateAnimal.call(magicAnimals.filter(animal => animal === id)[0], "Trogdor");
 }
 
 // *************
@@ -37,12 +38,13 @@ function callBinding(magicAnimals, updateAnimal, id) {
 // CODE HERE...
 
 function applyBinding(magicAnimals, updateAnimal, id) {
-	for (var i=0; i<magicAnimals.length; i++) {
-		if(magicAnimals[i] == id) {
-			updateAnimal.apply(magicAnimals[i], ["being majestic", "eating rainbows"]);
-		}
-	}
-	return magicAnimals;
+	// for (var i=0; i<magicAnimals.length; i++) {
+	// 	if(magicAnimals[i] == id) {
+	// 		updateAnimal.apply(magicAnimals[i], ["being majestic", "eating rainbows"]);
+	// 	}
+	// }
+	// return magicAnimals;
+	return updateAnimal.apply(magicAnimals.filter(animal => animal.id === id)[0], ["being majestic", "eating rainbows"]);
 }
 
 // *************
@@ -63,12 +65,27 @@ var foo;
 
 // CODE HERE...
 
+// function promiseMe ($q) {
+// 	var Promise = $q.promise;
+// 	$timeout(function() {
+// 		foo = "bar";
+// 	}, 2000);
+// 	return 
+// }
+
 function promiseMe ($q) {
-	var Promise = $q.promise;
-	$timeout(function() {
-		foo = "bar";
-	}, 2000);
-	return 
+	var deferred = $q.defer();
+	setTimeout(function() {
+		deferred.resolve(foo = "bar");
+	}, 20);
+	return deferred.promise;
+
+	// return new Promise(function(resolve, reject) {
+	// 	setTimeout(function() {
+	// 		deferred.resolve(foo = "bar");
+	// 	}, 20);
+	// 		return deferred.promise;
+	// });
 }
 
 // *************
@@ -86,9 +103,17 @@ function promiseMe ($q) {
 // CODE HERE...
 
 function emailList ($q, $http) {
-	return $http.get("/api/users").then(function(response) {
-		var array = [""];
-		array.push(response.data);
-		return $q.resolve(array);
-	});
+	// return $http.get("/api/users").then(function(response) {
+	// 	var array = [""];
+	// 	array.push(response.data);
+	// 	return $q.resolve(array);
+	// });
+
+	var emails = [];
+	var deferred = $q.defer();
+	$http.get("/api/users").then(function(response) {
+		response.data.forEach(function(val) {emails.push(val.email)});
+		deferred.resolve(emails);
+	})
+	return deferred.promise;
 }
