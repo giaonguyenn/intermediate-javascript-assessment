@@ -14,7 +14,14 @@
 
 // CODE HERE...
 
-
+function callBinding(magicAnimals, updateAnimal, id) {
+	for(var i=0; i<magicAnimals.length; i++) {
+		if (magicAnimals[i] == id) {
+			updateAnimal.call(magicAnimals[i], "Trogdor");
+		}
+	}
+	return magicAnimals;
+}
 
 // *************
 // * PROBLEM 2 *
@@ -29,7 +36,14 @@
 
 // CODE HERE...
 
-
+function applyBinding(magicAnimals, updateAnimal, id) {
+	for (var i=0; i<magicAnimals.length; i++) {
+		if(magicAnimals[i] == id) {
+			updateAnimal.apply(magicAnimals[i], ["being majestic", "eating rainbows"]);
+		}
+	}
+	return magicAnimals;
+}
 
 // *************
 // * PROBLEM 3 *
@@ -49,7 +63,13 @@ var foo;
 
 // CODE HERE...
 
-
+function promiseMe ($q) {
+	var Promise = $q.promise;
+	$timeout(function() {
+		foo = "bar";
+	}, 2000);
+	return 
+}
 
 // *************
 // * PROBLEM 4 *
@@ -64,3 +84,11 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+function emailList ($q, $http) {
+	return $http.get("/api/users").then(function(response) {
+		var array = [""];
+		array.push(response.data);
+		return $q.resolve(array);
+	});
+}

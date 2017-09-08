@@ -37,17 +37,22 @@
 var firstUser = 'don\'t touch this string!';
 var thirdUser = 'don\'t touch this string, either!';
 
-function noWeakLink() {
+// function noWeakLink() {
 
-  return $http({
-    method: 'GET',
-    url: '/api/users'
-  })
-  // CODE HERE...
-
-}
-
-
+//   return $http({
+//     method: 'GET',
+//     url: '/api/users'
+//   })
+//   // CODE HERE...
+//   .then(function(response) {
+//     firstUser = response.data;
+//     return firstUser;
+//   })
+//   .then(function(response) {
+//     thirdUser = response.data.data;
+//     return thirdUser[10];
+//   });
+// }
 
 // *************
 // * PROBLEM 2 *
@@ -69,12 +74,14 @@ function noWeakLink() {
 var elephant = {
   name: 'Horton'
 }
+
 function large() {
 
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
 
+var boundToElephant =  large.bind(elephant);
 
 
 // *************
@@ -89,7 +96,9 @@ function large() {
 
 // CODE HERE...
 
-
+function deathStar(capacity, crew) {
+  return capacity.bind(crew);
+}
 
 // *************
 // * PROBLEM 4 *
@@ -104,7 +113,11 @@ function large() {
 
 // CODE HERE...
 
-
+function accountingOffice(assets) {
+  return function(liabilities) {
+    return assets + liabilities;
+  };
+}
 
 // *************
 // * PROBLEM 5 *
@@ -129,7 +142,16 @@ function large() {
 
 // CODE HERE...
 
-
+function forgetter (name) {
+  var objects = {
+    name: name,
+    remember: []
+  };
+  return function rememberall(item) {
+    objects.remember.push(item);
+    return objects;
+  };
+}
 
 // *************
 // * PROBLEM 6 *
@@ -156,3 +178,35 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+
+function frodo(startingHungerValue, startingDangerValue) {
+  // var object ={
+  //   hunger: startingHungerValue,
+  //   danger: startingDangerValue
+  // };
+  // object.dinnerOverFire = function() {
+  //   this.hunger -= 25;
+  //   this.danger += 40;
+  //   return object;
+  // };
+  // object.hidingInBush = function() {
+  //   this.hunger += 35;
+  //   this.danger -= 20;
+  //   return object;
+  // };
+  var object = {
+    hunger: startingHungerValue,
+    danger: startingDangerValue,
+    dinnerOverFire: function(){
+      this.hunger -= 25;
+      this.danger + 40;
+      return this.object;
+    },
+    hidingInBush: function(){
+      this.hunger += 35;
+      this.danger -=20;
+      return this.object;
+    }
+  };
+  
+}
